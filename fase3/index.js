@@ -72,20 +72,20 @@ const todosAtivos = verificarTodosAtivos([
   { id: 3, nome: "Beatriz", ativo: true }
 ])
 // console.log(todosAtivos);
-const produto = {
+/* const produto = {
   id: 1,
   nome: "Notebook",
   preco: 3500,
   categoria: "Eletrônicos"
 };
-const { nome, preco} = produto;
+const { nome, preco} = produto; */
 // console.log(nome, preco);
 
-const usuario = {
+/* const usuario = {
   id: 1,
   nome: "Ana",
   idade: 22,
   cidade: "Recife"
 };
-const usuarioAtualizado = {...usuario, idade: 23, cidade: "Surubim" };
+const usuarioAtualizado = {...usuario, idade: 23, cidade: "Surubim" }; */
 // console.log(usuarioAtualizado);

@@ -1,5 +1,6 @@
 import {  controleParquinho } from '#/utils/controleParquinho'
 import { filtrarProdutos } from '#/utils/filtrarProdutos'
+import { validarCupom } from '#/utils/validarCupom';
 import { createFileRoute, Link } from '@tanstack/react-router'
 export const amigos = [
   { nome: 'Pedro', idade: 14, altura: 150 }, // ✅ Tem idade (14 >= 12) E altura (150 >= 140) -> LIBERADO
@@ -13,9 +14,14 @@ const vitrine = [
     { nome: 'Calça Jeans', preco: 120 },
     { nome: 'Meia Branca', preco: 15 },
   ];
+  export const cuponsDaLoja = [
+    { codigo: 'VALE10', descontoPorcentagem: 10, valorMinimo: 50 },
+    { codigo: 'SUPER50', descontoPorcentagem: 50, valorMinimo: 500 },
+  ];
 export const Route = createFileRoute('/')({ component: Home })
 function Home() {
-  console.log(filtrarProdutos(vitrine, "L", 130));
+  // console.log(filtrarProdutos(vitrine, "L", 130));
+  console.log(validarCupom(500, "super50", cuponsDaLoja));
   return (
     <div className="p-8">
       <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
@@ -23,7 +29,7 @@ function Home() {
         Edit <code>src/routes/index.tsx</code> to get started.
       </p>
       <Link to="/perfil">perfil</Link>
-      <p>{controleParquinho(amigos)}</p>
+      {/* <p>{controleParquinho(amigos)}</p> */}
     </div>
   )
 }

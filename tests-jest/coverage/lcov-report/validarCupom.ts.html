@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for filtrarProdutos.ts</title>
+    <title>Code coverage report for validarCupom.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> filtrarProdutos.ts</h1>
+        <h1><a href="index.html">All files</a> validarCupom.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>24/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>24/24</span>
             </div>
         
             
@@ -82,43 +82,58 @@
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export interface Produto {
-  nome: string
-  preco: number
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">interface Cupom {
+  codigo: string
+  descontoPorcentagem: number
+  valorMinimo: number
 }
 &nbsp;
-export function filtrarProdutos(
-  lista: Array&lt;Produto&gt;,
-  busca: string,
-  precoMaximo: number,
+export function validarCupom(
+  valorCarrinho: number,
+  cupomDigitado: string,
+  listaCupons: Array&lt;Cupom&gt;,
 ) {
-  if (precoMaximo &lt;= 0) throw new Error('Preço máximo inválido!')
+  if (valorCarrinho &lt;= 0) throw new Error('Valor do carrinho inválido!')
 &nbsp;
-  return lista.filter((produto) =&gt; {
-    const nomeBate = produto.nome.toLowerCase().includes(busca.toLowerCase())
-    const precoBate = produto.preco &lt;= precoMaximo
-&nbsp;
-    return nomeBate &amp;&amp; precoBate;
-  })
+  for (const { codigo, valorMinimo, descontoPorcentagem } of listaCupons) {
+    if (codigo.toLowerCase() === cupomDigitado.toLowerCase()) {
+      if (valorCarrinho &lt; valorMinimo) {
+        return 'O valor mínimo para usar este cupom não foi atingindo'
+      }
+      let desconto = valorCarrinho * (descontoPorcentagem / 100)
+      return valorCarrinho - desconto
+    }
+  }
+  return 'Cupom inexistente'
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -127,7 +142,7 @@ export function filtrarProdutos(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-13T22:46:47.795Z
+                at 2026-06-14T00:58:32.239Z
             </div>
         <script src="prettify.js"></script>
         <script>
